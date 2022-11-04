@@ -1,0 +1,23 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zqz.school.dao.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.zqz.school.dao.entity.User">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="disable" jdbcType="INTEGER" property="disable"/>
+        <result column="c_time" jdbcType="DATE" property="cTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      id, user_name, password, disable, c_time
+    </sql>
+
+    <select id="queryByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List"/>
+      from user
+      where user_name = #{userName}
+    </select>
+
+
+</mapper>
