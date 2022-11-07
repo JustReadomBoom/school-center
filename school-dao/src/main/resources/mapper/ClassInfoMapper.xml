@@ -27,5 +27,52 @@
         from class_info
     </select>
 
+    <select id="queryByParam" parameterType="com.zqz.school.dao.req.QueryClassPageReq" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from class_info
+        where 1 = 1
+        <if test="classCode != null and classCode != ''">
+            and class_code = #{classCode}
+        </if>
+        <if test="className != null and className != ''">
+            and class_name = #{className}
+        </if>
+        <if test="chargeTeacher != null and chargeTeacher != ''">
+            and charge_teacher = #{chargeTeacher}
+        </if>
+    </select>
+
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete
+        from class_info
+        where id = #{id}
+    </delete>
+
+    <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from class_info
+        where id = #{id}
+    </select>
+
+    <update id="update" parameterType="com.zqz.school.dao.entity.ClassInfo">
+        update class_info
+        <set>
+            <if test="classCode != null and classCode != ''">
+                class_code = #{classCode, jdbcType=VARCHAR},
+            </if>
+            <if test="className != null and className != ''">
+                class_name = #{className, jdbcType=VARCHAR},
+            </if>
+            <if test="chargeTeacher != null and chargeTeacher != ''">
+                charge_teacher = #{chargeTeacher, jdbcType=VARCHAR},
+            </if>
+            u_time = current_date
+        </set>
+        where id = #{id}
+    </update>
+
 
 </mapper>

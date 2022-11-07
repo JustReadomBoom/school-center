@@ -17,5 +17,9 @@ public class QueryStudentPageReq extends BasePage implements Serializable {
 
     private String name;
 
+    private String code;
+
+    private String classCode;
+
 
 }

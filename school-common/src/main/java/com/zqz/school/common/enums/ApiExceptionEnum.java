@@ -17,6 +17,7 @@ public enum ApiExceptionEnum {
     EMPTY_DATA("1003", "无数据"),
     PWD_ERROR("1004", "密码错误"),
     FAIL("1005", "失败"),
+    BIND_STUDENT("1006", "该班级有挂载学生, 不允许删除!"),
     SYSTEM_ERROR("9999", "系统异常");
 
     private String code;

@@ -24,4 +24,6 @@ public interface StudentMapper {
     int deleteById(Integer id);
 
     int update(Student student);
+
+    List<Student> queryByClassCode(String classCode);
 }

@@ -45,4 +45,9 @@ public class StudentService {
     public int update(Student student) {
         return mapper.update(student);
     }
+
+    public List<Student> queryByClassCode(String classCode){
+        return mapper.queryByClassCode(classCode);
+    }
+
 }
