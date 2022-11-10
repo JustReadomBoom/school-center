@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.zqz.school.common.bean.BaseResult;
 import com.zqz.school.common.enums.ApiExceptionEnum;
+import com.zqz.school.common.utils.DateUtil;
 import com.zqz.school.dao.entity.ClassInfo;
 import com.zqz.school.dao.entity.Student;
 import com.zqz.school.dao.req.QueryClassPageReq;
@@ -16,6 +17,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -83,6 +85,18 @@ public class ClassInfoController {
     public BaseResult update(@RequestBody ClassInfo classInfo) {
         int u = classInfoService.update(classInfo);
         if (u > 0) {
+            return new BaseResult(ApiExceptionEnum.SUCCESS);
+        }
+        return new BaseResult(ApiExceptionEnum.FAIL);
+    }
+
+
+    @PostMapping("/add")
+    public BaseResult add(@RequestBody ClassInfo classInfo) {
+        classInfo.setCTime(DateUtil.parse2yyyyMMddHHmmss(new Date()));
+        classInfo.setUTime(DateUtil.parse2yyyyMMddHHmmss(new Date()));
+        int add = classInfoService.add(classInfo);
+        if (add > 0) {
             return new BaseResult(ApiExceptionEnum.SUCCESS);
         }
         return new BaseResult(ApiExceptionEnum.FAIL);
