@@ -2,6 +2,7 @@ package com.zqz.school.dao.entity;
 
 import lombok.Data;
 
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
@@ -21,15 +22,18 @@ public class Student implements Serializable {
     private Integer age;
     private Integer sex;
     private String photo;
-    private String height;
     private String fatherName;
+
     private String fatherPhone;
+
     private String fatherJob;
+
     private String motherName;
+
     private String motherPhone;
+
     private String motherJob;
     private String homeAddress;
-    private String otherFamily;
     private String cTime;
     private String uTime;
 

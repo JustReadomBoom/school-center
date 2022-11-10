@@ -13,8 +13,6 @@ import java.util.List;
  */
 public interface StudentMapper {
 
-    Student queryByName(String name);
-
     List<Student> queryByParam(QueryStudentPageReq req);
 
     Student queryByCode(String code);

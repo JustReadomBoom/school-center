@@ -8,7 +8,6 @@
         <result column="age" jdbcType="INTEGER" property="age"/>
         <result column="sex" jdbcType="INTEGER" property="sex"/>
         <result column="photo" jdbcType="VARCHAR" property="photo"/>
-        <result column="height" jdbcType="VARCHAR" property="height"/>
         <result column="father_name" jdbcType="VARCHAR" property="fatherName"/>
         <result column="father_phone" jdbcType="VARCHAR" property="fatherPhone"/>
         <result column="father_job" jdbcType="VARCHAR" property="fatherJob"/>
@@ -16,31 +15,23 @@
         <result column="mother_phone" jdbcType="VARCHAR" property="motherPhone"/>
         <result column="mother_job" jdbcType="VARCHAR" property="motherJob"/>
         <result column="home_address" jdbcType="VARCHAR" property="homeAddress"/>
-        <result column="other_family" jdbcType="VARCHAR" property="otherFamily"/>
         <result column="c_time" jdbcType="DATE" property="cTime"/>
         <result column="u_time" jdbcType="DATE" property="uTime"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-      id, code, name, class_code, age, sex, photo, height, father_name, father_phone,
-      father_job, mother_name, mother_phone, mother_job, home_address, other_family, c_time, u_time
+      id, code, name, class_code, age, sex, photo, father_name, father_phone,
+      father_job, mother_name, mother_phone, mother_job, home_address, c_time, u_time
     </sql>
 
     <insert id="add" parameterType="com.zqz.school.dao.entity.Student">
       insert into student (code, `name`, class_code, age, sex, photo, height, father_name, father_phone,
       father_job, mother_name, mother_phone, mother_job, home_address, other_family, c_time, u_time)
       values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{classCode,jdbcType=VARCHAR},#{age,jdbcType=INTEGER},
-      #{sex,jdbcType=INTEGER},#{photo,jdbcType=VARCHAR},#{height,jdbcType=VARCHAR},#{fatherName,jdbcType=VARCHAR},#{fatherPhone,jdbcType=VARCHAR},
+      #{sex,jdbcType=INTEGER},#{photo,jdbcType=VARCHAR},#{fatherName,jdbcType=VARCHAR},#{fatherPhone,jdbcType=VARCHAR},
       #{fatherJob,jdbcType=VARCHAR},#{motherName,jdbcType=VARCHAR},#{motherPhone,jdbcType=VARCHAR},#{motherJob,jdbcType=VARCHAR},#{homeAddress,jdbcType=VARCHAR},
-      #{otherFamily,jdbcType=VARCHAR},#{cTime,jdbcType=VARCHAR},#{uTime,jdbcType=VARCHAR})
+      #{cTime,jdbcType=VARCHAR},#{uTime,jdbcType=VARCHAR})
     </insert>
-
-    <select id="queryByName" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from student
-        where name = #{name}
-    </select>
 
     <select id="queryByParam" parameterType="com.zqz.school.dao.req.QueryStudentPageReq" resultMap="BaseResultMap">
         select

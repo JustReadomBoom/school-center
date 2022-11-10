@@ -20,10 +20,6 @@ public class StudentService {
     @Resource
     private StudentMapper mapper;
 
-    public Student queryByName(String name) {
-        return mapper.queryByName(name);
-    }
-
 
     public List<Student> queryByParam(QueryStudentPageReq req) {
         return mapper.queryByParam(req);

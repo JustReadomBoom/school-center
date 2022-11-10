@@ -1,6 +1,5 @@
 package com.zqz.school.web.controller;
 
-import cn.hutool.json.JSONUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.zqz.school.common.bean.BaseResult;
@@ -19,6 +18,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,12 +38,6 @@ public class StudentController {
     private StudentService studentService;
     @Autowired
     private ClassInfoService classInfoService;
-
-    @GetMapping("/queryByName")
-    public Object queryByName(@RequestParam("name") String name) {
-        Student student = studentService.queryByName(name);
-        return JSONUtil.toJsonStr(student);
-    }
 
 
     @PostMapping("/queryPage")
@@ -100,15 +94,15 @@ public class StudentController {
         return new BaseResult(ApiExceptionEnum.FAIL);
     }
 
+
     @PostMapping("/update")
-    public BaseResult update(@RequestBody Student student){
+    public BaseResult update(@RequestBody Student student) {
         int u = studentService.update(student);
         if (u > 0) {
             return new BaseResult(ApiExceptionEnum.SUCCESS);
         }
         return new BaseResult(ApiExceptionEnum.FAIL);
     }
-
 
 
 }
