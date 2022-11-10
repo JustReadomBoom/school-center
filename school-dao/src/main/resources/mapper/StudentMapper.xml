@@ -10,9 +10,11 @@
         <result column="photo" jdbcType="VARCHAR" property="photo"/>
         <result column="father_name" jdbcType="VARCHAR" property="fatherName"/>
         <result column="father_phone" jdbcType="VARCHAR" property="fatherPhone"/>
+        <result column="father_id_no" jdbcType="VARCHAR" property="fatherIdNo"/>
         <result column="father_job" jdbcType="VARCHAR" property="fatherJob"/>
         <result column="mother_name" jdbcType="VARCHAR" property="motherName"/>
         <result column="mother_phone" jdbcType="VARCHAR" property="motherPhone"/>
+        <result column="mother_id_no" jdbcType="VARCHAR" property="motherIdNo"/>
         <result column="mother_job" jdbcType="VARCHAR" property="motherJob"/>
         <result column="home_address" jdbcType="VARCHAR" property="homeAddress"/>
         <result column="c_time" jdbcType="DATE" property="cTime"/>
@@ -20,17 +22,17 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-      id, code, name, class_code, age, sex, photo, father_name, father_phone,
-      father_job, mother_name, mother_phone, mother_job, home_address, c_time, u_time
+      id, code, name, class_code, age, sex, photo, father_name, father_phone, father_id_no,
+      father_job, mother_name, mother_phone, mother_id_no, mother_job, home_address, c_time, u_time
     </sql>
 
     <insert id="add" parameterType="com.zqz.school.dao.entity.Student">
-      insert into student (code, `name`, class_code, age, sex, photo, height, father_name, father_phone,
-      father_job, mother_name, mother_phone, mother_job, home_address, other_family, c_time, u_time)
+      insert into student (code, `name`, class_code, age, sex, photo, father_name, father_phone, father_id_no,
+      father_job, mother_name, mother_phone, mother_id_no, mother_job, home_address, c_time, u_time)
       values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{classCode,jdbcType=VARCHAR},#{age,jdbcType=INTEGER},
-      #{sex,jdbcType=INTEGER},#{photo,jdbcType=VARCHAR},#{fatherName,jdbcType=VARCHAR},#{fatherPhone,jdbcType=VARCHAR},
-      #{fatherJob,jdbcType=VARCHAR},#{motherName,jdbcType=VARCHAR},#{motherPhone,jdbcType=VARCHAR},#{motherJob,jdbcType=VARCHAR},#{homeAddress,jdbcType=VARCHAR},
-      #{cTime,jdbcType=VARCHAR},#{uTime,jdbcType=VARCHAR})
+      #{sex,jdbcType=INTEGER},#{photo,jdbcType=VARCHAR},#{fatherName,jdbcType=VARCHAR},#{fatherPhone,jdbcType=VARCHAR},#{fatherIdNo,jdbcType=VARCHAR},
+      #{fatherJob,jdbcType=VARCHAR},#{motherName,jdbcType=VARCHAR},#{motherPhone,jdbcType=VARCHAR},#{motherIdNo,jdbcType=VARCHAR},
+      #{motherJob,jdbcType=VARCHAR},#{homeAddress,jdbcType=VARCHAR},#{cTime,jdbcType=VARCHAR},#{uTime,jdbcType=VARCHAR})
     </insert>
 
     <select id="queryByParam" parameterType="com.zqz.school.dao.req.QueryStudentPageReq" resultMap="BaseResultMap">
@@ -39,13 +41,13 @@
         from student
         where 1 = 1
         <if test="name != null and name != ''">
-            and name = #{name}
+            and `name` like CONCAT('%', #{name, jdbcType=VARCHAR}, '%')
         </if>
         <if test="code != null and code != ''">
-            and code = #{code}
+            and code = #{code, jdbcType=VARCHAR}
         </if>
         <if test="classCode != null and classCode != ''">
-            and class_code = #{classCode}
+            and class_code = #{classCode, jdbcType=VARCHAR}
         </if>
     </select>
 
@@ -83,6 +85,9 @@
             <if test="fatherPhone != null and fatherPhone != ''">
                 father_phone = #{fatherPhone, jdbcType=VARCHAR},
             </if>
+            <if test="fatherInNo != null and fatherInNo != ''">
+                father_id_no = #{fatherInNo, jdbcType=VARCHAR},
+            </if>
             <if test="fatherJob != null and fatherJob != ''">
                 father_job = #{fatherJob, jdbcType=VARCHAR},
             </if>
@@ -91,6 +96,9 @@
             </if>
             <if test="motherPhone != null and motherPhone != ''">
                 mother_phone = #{motherPhone, jdbcType=VARCHAR},
+            </if>
+            <if test="motherIdNo != null and motherIdNo != ''">
+                mother_id_no = #{motherIdNo, jdbcType=VARCHAR},
             </if>
             <if test="motherJob != null and motherJob != ''">
                 mother_job = #{motherJob, jdbcType=VARCHAR},

@@ -26,11 +26,15 @@ public class Student implements Serializable {
 
     private String fatherPhone;
 
+    private String fatherIdNo;
+
     private String fatherJob;
 
     private String motherName;
 
     private String motherPhone;
+
+    private String motherIdNo;
 
     private String motherJob;
     private String homeAddress;

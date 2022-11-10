@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2022-11-07 15:47:36
+Date: 2022-11-10 17:05:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,7 +33,7 @@ CREATE TABLE `class_info` (
 -- ----------------------------
 -- Records of class_info
 -- ----------------------------
-INSERT INTO `class_info` VALUES ('1', '10001', '小一班', null, '邓老师', '2022-11-04 11:31:11', '2022-11-04 11:31:13');
+INSERT INTO `class_info` VALUES ('1', '10001', '小一班', null, '邓老师', '2022-11-07 17:47:26', '2022-11-07 00:00:00');
 INSERT INTO `class_info` VALUES ('2', '10002', '小二班', null, '张老师', '2022-11-04 11:31:39', '2022-11-04 11:31:42');
 INSERT INTO `class_info` VALUES ('3', '10003', '小三班', '', '袁老师', '2022-11-04 11:32:11', '2022-11-04 11:32:13');
 
@@ -49,34 +49,26 @@ CREATE TABLE `student` (
   `age` int(3) DEFAULT NULL,
   `sex` int(3) DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL,
-  `height` varchar(8) DEFAULT NULL,
   `father_name` varchar(20) DEFAULT NULL,
   `father_phone` varchar(11) DEFAULT NULL,
+  `father_id_no` varchar(32) DEFAULT NULL,
   `father_job` varchar(64) DEFAULT NULL,
   `mother_name` varchar(20) DEFAULT NULL,
   `mother_phone` varchar(11) DEFAULT NULL,
+  `mother_id_no` varchar(32) DEFAULT NULL,
   `mother_job` varchar(64) DEFAULT NULL,
   `home_address` varchar(64) DEFAULT NULL,
-  `other_family` varchar(255) DEFAULT NULL,
   `c_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `u_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `STUDENT_CODE_INDEX` (`code`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of student
 -- ----------------------------
-INSERT INTO `student` VALUES ('1', '001', '胡明', '10002', '8', '0', null, '130', '胡军', '13872829349', '自由职业', '杨红', '18827362910', '家政111', '东湖一路', null, '2022-11-04 17:13:47', '2022-11-04 17:13:47');
-INSERT INTO `student` VALUES ('2', '002', '周洲', '10001', '5', '1', null, '110', '2222', '2222', '333', '333', '4444', '3444', '5555', null, '2022-11-04 17:03:25', '2022-11-04 17:03:25');
-INSERT INTO `student` VALUES ('3', '003', '周洲', '10002', '3', '1', null, '110', '周远山', '15822542241', '企业经理', '孙俪', '12541224411', '大学教师', '珍珠路一号', null, '2022-11-04 15:43:39', '2022-11-04 15:43:39');
-INSERT INTO `student` VALUES ('4', '004', '周洲', '10002', '3', '1', null, '110', '周远山', '15822542241', '企业经理', '孙俪', '12541224411', '大学教师', '珍珠路一号', null, '2022-11-04 15:43:41', '2022-11-04 15:43:41');
-INSERT INTO `student` VALUES ('5', '005', '周洲', '10001', '3', '1', null, '110', '周远山', '15822542241', '企业经理', '孙俪', '12541224411', '大学教师', '珍珠路一号', null, '2022-11-04 15:43:30', '2022-11-04 15:43:30');
-INSERT INTO `student` VALUES ('8', '008', '周洲', '10003', '3', '1', null, '110', '周远山', '15822542241', '企业经理', '孙俪', '12541224411', '大学教师', '珍珠路一号', null, '2022-11-04 15:43:50', '2022-11-04 15:43:50');
-INSERT INTO `student` VALUES ('9', '009', '周洲', '10001', '3', '1', null, '110', '周远山', '15822542241', '企业经理', '孙俪', '12541224411', '大学教师', '珍珠路一号', null, '2022-11-04 15:43:33', '2022-11-04 15:43:33');
-INSERT INTO `student` VALUES ('10', '010', '周洲', '10003', '3', '1', null, '110', '周远山', '15822542241', '企业经理', '孙俪', '12541224411', '大学教师', '珍珠路一号', null, '2022-11-04 15:43:53', '2022-11-04 15:43:53');
-INSERT INTO `student` VALUES ('11', '011', '周洲', '10001', '3', '1', null, '110', '周远山', '15822542241', '企业经理', '孙俪', '12541224411', '大学教师', '珍珠路一号', null, '2022-11-04 15:43:37', '2022-11-04 15:43:37');
-INSERT INTO `student` VALUES ('12', '012', '周洲', '10002', '3', '1', null, '110', '周远山', '15822542241', '企业经理', '孙俪', '12541224411', '大学教师', '珍珠路一号', null, '2022-11-04 15:43:46', '2022-11-04 15:43:46');
-INSERT INTO `student` VALUES ('24', '013', '黄晓雯', '10002', '4', '2', null, null, '黄天', '12356952658', '还是说说', '聂小红', '15862565894', '但是窘境覅殴打事件', '反倒是哦第四哦啊多久啊是', null, '2022-11-04 15:59:50', '2022-11-04 15:59:50');
+INSERT INTO `student` VALUES ('30', '001', '周丽娟', '10003', '3', '2', null, '周小军', '15263251254', '420500194510181811', '国药葛洲坝中心医院', '曹琳', '15852652354', '420503198301215226', '第一人民医院', '珍珠路二号', '2022-11-10 17:05:04', '2022-11-10 17:05:04');
+INSERT INTO `student` VALUES ('31', '003', '黄思琪', '10002', '4', '2', null, '黄文君', '15852635458', '420503198303125216', '宜昌市工商管理局', '聂开华', '15852652414', '420582199107040047', '家政服务', '东站二路1号', '2022-11-10 17:05:06', '2022-11-10 17:05:06');
 
 -- ----------------------------
 -- Table structure for user
