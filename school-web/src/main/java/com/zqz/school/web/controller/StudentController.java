@@ -5,20 +5,27 @@ import com.github.pagehelper.PageHelper;
 import com.zqz.school.common.bean.BaseResult;
 import com.zqz.school.common.enums.ApiExceptionEnum;
 import com.zqz.school.common.utils.DateUtil;
+import com.zqz.school.common.utils.ExcelUtil;
 import com.zqz.school.dao.bean.StudentPage;
 import com.zqz.school.dao.entity.ClassInfo;
 import com.zqz.school.dao.entity.Student;
 import com.zqz.school.dao.req.QueryStudentPageReq;
 import com.zqz.school.dao.resp.QueryStudentPageResp;
+import com.zqz.school.dao.resp.StudentExcelDataResp;
 import com.zqz.school.dao.service.ClassInfoService;
 import com.zqz.school.dao.service.StudentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +39,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/student")
+@Slf4j
 public class StudentController {
 
     @Autowired
@@ -102,6 +110,56 @@ public class StudentController {
             return new BaseResult(ApiExceptionEnum.SUCCESS);
         }
         return new BaseResult(ApiExceptionEnum.FAIL);
+    }
+
+
+    @GetMapping("/downloadData")
+    public void downloadData(HttpServletResponse response) {
+        List<Student> studentList = studentService.queryByParam(new QueryStudentPageReq());
+        if (CollectionUtils.isEmpty(studentList)) {
+            return;
+        }
+        try {
+            List<StudentExcelDataResp> dataList = new ArrayList<>();
+            studentList.forEach(s -> {
+                StudentExcelDataResp dataResp = new StudentExcelDataResp();
+                BeanUtils.copyProperties(s, dataResp);
+                if (1 == s.getSex()) {
+                    dataResp.setSex("男");
+                } else {
+                    dataResp.setSex("女");
+                }
+                dataList.add(dataResp);
+            });
+            exportNewModel(dataList, response);
+        } catch (Exception e) {
+            log.error("文件下载错误:{}", e.getMessage());
+        }
+    }
+
+    private void exportNewModel(List<StudentExcelDataResp> exportList, HttpServletResponse response) {
+        OutputStream bos = null;
+        String fileName = DateUtil.getTime2MSString(new Date()) + ".xls";
+        try {
+            bos = new BufferedOutputStream(response.getOutputStream());
+            response.setHeader(HttpHeaders.CONTENT_TYPE, "application/vnd.ms-excel");
+            /**
+             * 这里的表头,需要与前面定义的 ExcelConsumListResp 类中的属性名保持一致,并且顺序和数量也需要一致
+             */
+            String[] atrArray = {"学号", "姓名", "班级编号", "年龄", "性别", "头像", "爸爸姓名", "爸爸手机号", "爸爸身份证号", "爸爸工作", "妈妈姓名", "妈妈手机号", "妈妈身份证号", "妈妈工作", "家庭地址"};
+            //调用工具类中的方法,进行导出
+            ExcelUtil.exportExcelList(fileName, atrArray, exportList, bos);
+            //写出流
+            ResponseEntity.ok().body(bos);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        } finally {
+            try {
+                bos.close();
+            } catch (Exception be) {
+                be.printStackTrace();
+            }
+        }
     }
 
 

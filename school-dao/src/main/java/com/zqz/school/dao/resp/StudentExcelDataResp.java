@@ -1,4 +1,4 @@
-package com.zqz.school.dao.entity;
+package com.zqz.school.dao.resp;
 
 import lombok.Data;
 
@@ -7,37 +7,26 @@ import java.io.Serializable;
 /**
  * @Author: ZQZ
  * @Description:
- * @ClassName: Student
- * @Date: Created in 14:30 2022-10-31
+ * @ClassName: StudentExcelDataResp
+ * @Date: Created in 15:15 2022-11-11
  */
 @Data
-public class Student implements Serializable {
+public class StudentExcelDataResp implements Serializable {
+    private static final long serialVersionUID = -8404048366214972422L;
 
-    private static final long serialVersionUID = -7231177764076928290L;
-    private Integer id;
     private String code;
     private String name;
     private String classCode;
     private Integer age;
-    private Integer sex;
+    private String sex;
     private String photo;
     private String fatherName;
-
     private String fatherPhone;
-
     private String fatherIdNo;
-
     private String fatherJob;
-
     private String motherName;
-
     private String motherPhone;
-
     private String motherIdNo;
-
     private String motherJob;
     private String homeAddress;
-    private String cTime;
-    private String uTime;
-
 }
