@@ -25,4 +25,6 @@ public interface ClassInfoMapper {
 
     int update(ClassInfo classInfo);
 
+    int add(ClassInfo classInfo);
+
 }

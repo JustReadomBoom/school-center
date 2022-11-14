@@ -44,4 +44,8 @@ public class ClassInfoService {
         return mapper.update(classInfo);
     }
 
+    public int add(ClassInfo classInfo){
+        return mapper.add(classInfo);
+    }
+
 }
