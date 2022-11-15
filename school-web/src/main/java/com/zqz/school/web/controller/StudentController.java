@@ -12,8 +12,10 @@ import com.zqz.school.dao.entity.Student;
 import com.zqz.school.dao.req.QueryStudentPageReq;
 import com.zqz.school.dao.resp.QueryStudentPageResp;
 import com.zqz.school.dao.resp.StudentExcelDataResp;
+import com.zqz.school.dao.resp.StudentPhotoUploadResp;
 import com.zqz.school.dao.service.ClassInfoService;
 import com.zqz.school.dao.service.StudentService;
+import com.zqz.school.service.common.FileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
@@ -46,6 +50,8 @@ public class StudentController {
     private StudentService studentService;
     @Autowired
     private ClassInfoService classInfoService;
+    @Autowired
+    private FileService fileService;
 
 
     @PostMapping("/queryPage")
@@ -163,4 +169,25 @@ public class StudentController {
     }
 
 
+    @PostMapping("/uploadImg")
+    public BaseResult<StudentPhotoUploadResp> uploadImg(MultipartFile file, @RequestParam("id") Integer id) {
+        StudentPhotoUploadResp uploadResp = new StudentPhotoUploadResp();
+        try {
+            String fileName = DateUtil.getTime2MSString(new Date());
+            String url = fileService.upload(file, fileName);
+            log.info("上传结果URL:{}", url);
+            if (ObjectUtils.isEmpty(url)) {
+                return new BaseResult<>(ApiExceptionEnum.FAIL);
+            }
+            uploadResp.setPhoto(url);
+            Student student = new Student();
+            student.setId(id);
+            student.setPhoto(url);
+            student.setUTime(DateUtil.parse2yyyyMMddHHmmss(new Date()));
+            studentService.update(student);
+        } catch (Exception e) {
+            log.error("uploadImg error:{}", e.getMessage(), e);
+        }
+        return new BaseResult<>(uploadResp);
+    }
 }

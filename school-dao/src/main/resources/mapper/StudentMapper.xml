@@ -79,14 +79,17 @@
             <if test="sex != null">
                 sex = #{sex, jdbcType=INTEGER},
             </if>
+            <if test="photo != null and photo != ''">
+                photo = #{photo, jdbcType=VARCHAR},
+            </if>
             <if test="fatherName != null and fatherName != ''">
                 father_name = #{fatherName, jdbcType=VARCHAR},
             </if>
             <if test="fatherPhone != null and fatherPhone != ''">
                 father_phone = #{fatherPhone, jdbcType=VARCHAR},
             </if>
-            <if test="fatherInNo != null and fatherInNo != ''">
-                father_id_no = #{fatherInNo, jdbcType=VARCHAR},
+            <if test="fatherIdNo != null and fatherIdNo != ''">
+                father_id_no = #{fatherIdNo, jdbcType=VARCHAR},
             </if>
             <if test="fatherJob != null and fatherJob != ''">
                 father_job = #{fatherJob, jdbcType=VARCHAR},
@@ -105,6 +108,9 @@
             </if>
             <if test="homeAddress != null and homeAddress != ''">
                 home_address = #{homeAddress, jdbcType=VARCHAR},
+            </if>
+            <if test="uTime != null and uTime != ''">
+                u_time = #{uTime, jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id}
