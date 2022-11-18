@@ -1,5 +1,11 @@
 package com.zqz.school.web.controller;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelReader;
+import com.alibaba.excel.context.AnalysisContext;
+import com.alibaba.excel.event.AnalysisEventListener;
+import com.alibaba.excel.read.listener.ReadListener;
+import com.alibaba.excel.read.metadata.ReadSheet;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.zqz.school.common.bean.BaseResult;
@@ -9,6 +15,7 @@ import com.zqz.school.common.utils.ExcelUtil;
 import com.zqz.school.dao.bean.StudentPage;
 import com.zqz.school.dao.entity.ClassInfo;
 import com.zqz.school.dao.entity.Student;
+import com.zqz.school.dao.req.ExcelStudentData;
 import com.zqz.school.dao.req.QueryStudentPageReq;
 import com.zqz.school.dao.resp.QueryStudentPageResp;
 import com.zqz.school.dao.resp.StudentExcelDataResp;
@@ -23,12 +30,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,6 +59,7 @@ public class StudentController {
     private ClassInfoService classInfoService;
     @Autowired
     private FileService fileService;
+    private static final int BATCH_COUNT = 10;
 
 
     @PostMapping("/queryPage")
@@ -187,7 +195,53 @@ public class StudentController {
             studentService.update(student);
         } catch (Exception e) {
             log.error("uploadImg error:{}", e.getMessage(), e);
+            return new BaseResult<>(ApiExceptionEnum.FAIL.getCode(), e.getMessage());
         }
         return new BaseResult<>(uploadResp);
+    }
+
+
+    @PostMapping("/importData")
+    public BaseResult importData(MultipartFile file) {
+        InputStream in = null;
+        try {
+            in = file.getInputStream();
+            List<Student> dataList = new ArrayList<>();
+            ExcelReader excelReader = EasyExcel.read(in).build();
+            ReadListener<ExcelStudentData> listener = new AnalysisEventListener<ExcelStudentData>() {
+                @Override
+                public void invoke(ExcelStudentData excelStudentData, AnalysisContext analysisContext) {
+                    Student student = new Student();
+                    BeanUtils.copyProperties(excelStudentData, student);
+                    student.setCTime(DateUtil.parse2yyyyMMddHHmmss(new Date()));
+                    student.setUTime(DateUtil.parse2yyyyMMddHHmmss(new Date()));
+                    dataList.add(student);
+                    if (dataList.size() >= BATCH_COUNT) {
+                        studentService.addBatch(dataList);
+                        dataList.clear();
+                    }
+                }
+
+                @Override
+                public void doAfterAllAnalysed(AnalysisContext analysisContext) {
+                    studentService.addBatch(dataList);
+                }
+            };
+            ReadSheet sheet = EasyExcel.readSheet(0).head(ExcelStudentData.class).registerReadListener(listener).build();
+            excelReader.read(sheet);
+            excelReader.finish();
+        } catch (Exception e) {
+            log.error("importData error:{}", e.getMessage(), e);
+            return new BaseResult(ApiExceptionEnum.FAIL);
+        } finally {
+            try {
+                if (null != in) {
+                    in.close();
+                }
+            } catch (Exception pe) {
+                pe.printStackTrace();
+            }
+        }
+        return new BaseResult(ApiExceptionEnum.SUCCESS);
     }
 }

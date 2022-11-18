@@ -35,6 +35,20 @@
       #{motherJob,jdbcType=VARCHAR},#{homeAddress,jdbcType=VARCHAR},#{cTime,jdbcType=VARCHAR},#{uTime,jdbcType=VARCHAR})
     </insert>
 
+    <insert id="addBatch" parameterType="java.util.List">
+        insert into student (code, `name`, class_code, age, sex, photo, father_name, father_phone, father_id_no,
+        father_job, mother_name, mother_phone, mother_id_no, mother_job, home_address, c_time, u_time)
+        values
+        <foreach collection="list" item="s" index="index"
+                 separator=",">
+            (#{s.code,jdbcType=VARCHAR}, #{s.name,jdbcType=VARCHAR},#{s.classCode,jdbcType=VARCHAR},#{s.age,jdbcType=INTEGER},
+            #{s.sex,jdbcType=INTEGER},#{s.photo,jdbcType=VARCHAR},#{s.fatherName,jdbcType=VARCHAR},#{s.fatherPhone,jdbcType=VARCHAR},#{s.fatherIdNo,jdbcType=VARCHAR},
+            #{s.fatherJob,jdbcType=VARCHAR},#{s.motherName,jdbcType=VARCHAR},#{s.motherPhone,jdbcType=VARCHAR},#{s.motherIdNo,jdbcType=VARCHAR},
+            #{s.motherJob,jdbcType=VARCHAR},#{s.homeAddress,jdbcType=VARCHAR},#{s.cTime,jdbcType=VARCHAR},#{s.uTime,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+
     <select id="queryByParam" parameterType="com.zqz.school.dao.req.QueryStudentPageReq" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -122,6 +136,9 @@
         from student
         where class_code = #{classCode}
     </select>
+
+
+
 
 
 </mapper>

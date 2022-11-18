@@ -43,34 +43,34 @@ public class ExcelUtil {
         // 设置这些样式
         //设置表头的背景颜色(excel的第一行) SKY_BLUE
         style.setFillForegroundColor(HSSFColor.WHITE.index);
-        style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
-        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+//        style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+//        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
         // 生成一个字体
         HSSFFont font = workbook.createFont();
         //设置表头的字体颜色 VIOLET
         font.setColor(HSSFColor.BLACK.index);
         font.setFontHeightInPoints((short) 12);
-        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+//        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         // 把字体应用到当前的样式
         style.setFont(font);
         // 生成并设置另一个样式
         HSSFCellStyle style2 = workbook.createCellStyle();
         //设置表体的背景颜色(除了表头)  LIGHT_YELLOW
         style2.setFillForegroundColor(HSSFColor.WHITE.index);
-        style2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-        style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        style2.setBorderRight(HSSFCellStyle.BORDER_THIN);
-        style2.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        style2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+//        style2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+//        style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//        style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        style2.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//        style2.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//        style2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+//        style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
         // 生成另一个字体
         HSSFFont font2 = workbook.createFont();
-        font2.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+//        font2.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
         // 把字体应用到当前的样式
         style2.setFont(font2);
 

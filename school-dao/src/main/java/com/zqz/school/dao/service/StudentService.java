@@ -1,6 +1,5 @@
 package com.zqz.school.dao.service;
 
-import com.zqz.school.dao.bean.StudentPage;
 import com.zqz.school.dao.entity.Student;
 import com.zqz.school.dao.mapper.StudentMapper;
 import com.zqz.school.dao.req.QueryStudentPageReq;
@@ -31,6 +30,10 @@ public class StudentService {
 
     public int add(Student student){
         return mapper.add(student);
+    }
+
+    public int addBatch(List<Student> students){
+        return mapper.addBatch(students);
     }
 
 

@@ -24,4 +24,7 @@ public interface StudentMapper {
     int update(Student student);
 
     List<Student> queryByClassCode(String classCode);
+
+    int addBatch(List<Student> list);
+
 }
