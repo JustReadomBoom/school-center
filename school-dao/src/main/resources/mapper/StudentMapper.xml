@@ -4,6 +4,7 @@
         <result column="id" jdbcType="INTEGER" property="id"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="id_no" jdbcType="VARCHAR" property="idNo"/>
         <result column="class_code" jdbcType="VARCHAR" property="classCode"/>
         <result column="age" jdbcType="INTEGER" property="age"/>
         <result column="sex" jdbcType="INTEGER" property="sex"/>
@@ -22,26 +23,26 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-      id, code, name, class_code, age, sex, photo, father_name, father_phone, father_id_no,
+      id, code, name, id_no, class_code, age, sex, photo, father_name, father_phone, father_id_no,
       father_job, mother_name, mother_phone, mother_id_no, mother_job, home_address, c_time, u_time
     </sql>
 
     <insert id="add" parameterType="com.zqz.school.dao.entity.Student">
-      insert into student (code, `name`, class_code, age, sex, photo, father_name, father_phone, father_id_no,
+      insert into student (code, `name`, id_no, class_code, age, sex, photo, father_name, father_phone, father_id_no,
       father_job, mother_name, mother_phone, mother_id_no, mother_job, home_address, c_time, u_time)
-      values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{classCode,jdbcType=VARCHAR},#{age,jdbcType=INTEGER},
+      values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{classCode,jdbcType=VARCHAR},#{age,jdbcType=INTEGER},
       #{sex,jdbcType=INTEGER},#{photo,jdbcType=VARCHAR},#{fatherName,jdbcType=VARCHAR},#{fatherPhone,jdbcType=VARCHAR},#{fatherIdNo,jdbcType=VARCHAR},
       #{fatherJob,jdbcType=VARCHAR},#{motherName,jdbcType=VARCHAR},#{motherPhone,jdbcType=VARCHAR},#{motherIdNo,jdbcType=VARCHAR},
       #{motherJob,jdbcType=VARCHAR},#{homeAddress,jdbcType=VARCHAR},#{cTime,jdbcType=VARCHAR},#{uTime,jdbcType=VARCHAR})
     </insert>
 
     <insert id="addBatch" parameterType="java.util.List">
-        insert into student (code, `name`, class_code, age, sex, photo, father_name, father_phone, father_id_no,
+        insert into student (code, `name`, id_no, class_code, age, sex, photo, father_name, father_phone, father_id_no,
         father_job, mother_name, mother_phone, mother_id_no, mother_job, home_address, c_time, u_time)
         values
         <foreach collection="list" item="s" index="index"
                  separator=",">
-            (#{s.code,jdbcType=VARCHAR}, #{s.name,jdbcType=VARCHAR},#{s.classCode,jdbcType=VARCHAR},#{s.age,jdbcType=INTEGER},
+            (#{s.code,jdbcType=VARCHAR}, #{s.name,jdbcType=VARCHAR}, #{s.idNo,jdbcType=VARCHAR}, #{s.classCode,jdbcType=VARCHAR},#{s.age,jdbcType=INTEGER},
             #{s.sex,jdbcType=INTEGER},#{s.photo,jdbcType=VARCHAR},#{s.fatherName,jdbcType=VARCHAR},#{s.fatherPhone,jdbcType=VARCHAR},#{s.fatherIdNo,jdbcType=VARCHAR},
             #{s.fatherJob,jdbcType=VARCHAR},#{s.motherName,jdbcType=VARCHAR},#{s.motherPhone,jdbcType=VARCHAR},#{s.motherIdNo,jdbcType=VARCHAR},
             #{s.motherJob,jdbcType=VARCHAR},#{s.homeAddress,jdbcType=VARCHAR},#{s.cTime,jdbcType=VARCHAR},#{s.uTime,jdbcType=VARCHAR})
@@ -83,6 +84,9 @@
         <set>
             <if test="name != null and name != ''">
                 `name` = #{name, jdbcType=VARCHAR},
+            </if>
+            <if test="idNo != null and name != ''">
+                id_no = #{idNo, jdbcType=VARCHAR},
             </if>
             <if test="classCode != null and classCode != ''">
                 class_code = #{classCode, jdbcType=VARCHAR},

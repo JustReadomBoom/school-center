@@ -23,35 +23,38 @@ public class ExcelStudentData implements Serializable {
     private String name;
 
     @ExcelProperty(index = 2)
-    private Integer age;
+    private String idNo;
 
     @ExcelProperty(index = 3)
-    private Integer sex;
+    private Integer age;
 
     @ExcelProperty(index = 4)
-    private String fatherName;
+    private Integer sex;
 
     @ExcelProperty(index = 5)
-    private String fatherPhone;
+    private String fatherName;
 
     @ExcelProperty(index = 6)
-    private String fatherIdNo;
+    private String fatherPhone;
 
     @ExcelProperty(index = 7)
-    private String fatherJob;
+    private String fatherIdNo;
 
     @ExcelProperty(index = 8)
-    private String motherName;
+    private String fatherJob;
 
     @ExcelProperty(index = 9)
-    private String motherPhone;
+    private String motherName;
 
     @ExcelProperty(index = 10)
-    private String motherIdNo;
+    private String motherPhone;
 
     @ExcelProperty(index = 11)
-    private String motherJob;
+    private String motherIdNo;
 
     @ExcelProperty(index = 12)
+    private String motherJob;
+
+    @ExcelProperty(index = 13)
     private String homeAddress;
 }

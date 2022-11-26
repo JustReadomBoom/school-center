@@ -17,6 +17,7 @@ public class Student implements Serializable {
     private Integer id;
     private String code;
     private String name;
+    private String idNo;
     private String classCode;
     private Integer age;
     private Integer sex;

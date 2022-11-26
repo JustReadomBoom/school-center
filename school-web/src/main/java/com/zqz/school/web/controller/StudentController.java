@@ -160,7 +160,7 @@ public class StudentController {
             /**
              * 这里的表头,需要与前面定义的 ExcelConsumListResp 类中的属性名保持一致,并且顺序和数量也需要一致
              */
-            String[] atrArray = {"学号", "姓名", "班级编号", "年龄", "性别", "头像", "爸爸姓名", "爸爸手机号", "爸爸身份证号", "爸爸工作", "妈妈姓名", "妈妈手机号", "妈妈身份证号", "妈妈工作", "家庭地址"};
+            String[] atrArray = {"学号", "姓名", "身份证号", "班级编号", "年龄", "性别", "头像", "爸爸姓名", "爸爸手机号", "爸爸身份证号", "爸爸工作", "妈妈姓名", "妈妈手机号", "妈妈身份证号", "妈妈工作", "家庭地址"};
             //调用工具类中的方法,进行导出
             ExcelUtil.exportExcelList(fileName, atrArray, exportList, bos);
             //写出流
@@ -169,7 +169,9 @@ public class StudentController {
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
-                bos.close();
+                if (null != bos) {
+                    bos.close();
+                }
             } catch (Exception be) {
                 be.printStackTrace();
             }

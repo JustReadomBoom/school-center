@@ -16,6 +16,7 @@ public class StudentExcelDataResp implements Serializable {
 
     private String code;
     private String name;
+    private String idNo;
     private String classCode;
     private Integer age;
     private String sex;
